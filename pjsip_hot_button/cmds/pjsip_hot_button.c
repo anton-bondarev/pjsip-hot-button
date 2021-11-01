@@ -28,7 +28,7 @@
 	(void) prev_type
 #endif
 
-#if  OPTION_GET(BOOLEAN,use_real_button)
+#if !OPTION_GET(BOOLEAN,use_real_button)
 static int wait_button(void) {
 	char option[10];
 
