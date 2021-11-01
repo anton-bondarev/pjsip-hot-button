@@ -1,0 +1,17 @@
+package project.pjsip_hot_button.board.drv
+
+@BuildDepends(third_party.bsp.st_bsp_api)
+module ethernet_msp {
+	option number log_level=1
+
+	source "eth_msp.c"
+
+	depends embox.net.skbuff
+	depends embox.net.l2.ethernet
+	depends embox.kernel.irq_api
+	depends embox.net.dev
+	depends embox.net.core
+	depends embox.net.entry_api
+	depends embox.net.util.show_packet
+	depends third_party.bsp.st_bsp_api
+}
