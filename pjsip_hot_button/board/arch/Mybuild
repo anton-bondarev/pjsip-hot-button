@@ -19,9 +19,10 @@ module arch extends embox.arch.arch {
 @BuildDepends(h743zi_conf)
 @BuildDepends(third_party.bsp.stmh7cube.cube)
 @BuildArtifactPath(cppflags="$(addprefix -I$(EXTERNAL_BUILD_DIR)/third_party/bsp/stmh7cube/cube/STM32CubeH7-1.8.0/,Drivers/BSP/STM32H7xx_Nucleo Projects/NUCLEO-H743ZI/Templates/Inc)")
-@BuildArtifactPath(cppflags="-I$(EXTERNAL_BUILD_DIR)/third_party/bsp/stmh7cube/middlewares/st_audio_pdm/Addons/PDM/Inc/")
+@BuildDepends(third_party.lib.st_audio_pdm.libPDMFilter_CM7_GCC_wc32)
 static module bsp extends third_party.bsp.st_bsp_api {
 
+	@NoRuntime depends third_party.lib.st_audio_pdm.libPDMFilter_CM7_GCC_wc32
 	@NoRuntime depends third_party.bsp.stmh7cube.cube
 	@NoRuntime depends h743zi_conf
 	@NoRuntime depends arch
