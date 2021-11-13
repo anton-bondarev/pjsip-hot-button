@@ -584,12 +584,13 @@ void HAL_I2S_RxHalfCpltCallback(I2S_HandleTypeDef *hi2s)
   * @note   This API is called by BSP_AUDIO_IN_Init()
   *         Being __weak it can be overwritten by the application
   */
-__weak void BSP_AUDIO_IN_ClockConfig(I2S_HandleTypeDef *hi2s, uint32_t AudioFreq, void *Params)
-{
-  RCC_PeriphCLKInitTypeDef rccclkinit;
+__weak void BSP_AUDIO_IN_ClockConfig(I2S_HandleTypeDef *hi2s,
+		uint32_t AudioFreq, void *Params) {
+	RCC_PeriphCLKInitTypeDef rccclkinit;
 
-  /*Enable PLLI2S clock*/
-  HAL_RCCEx_GetPeriphCLKConfig(&rccclkinit);
+	/*Enable PLLI2S clock*/
+	HAL_RCCEx_GetPeriphCLKConfig(&rccclkinit);
+#if 0
   /* PLLI2S_VCO Input = HSE_VALUE/PLL_M = 1 Mhz */
   if ((AudioFreq & 0x7) == 0)
   {
@@ -611,6 +612,10 @@ __weak void BSP_AUDIO_IN_ClockConfig(I2S_HandleTypeDef *hi2s, uint32_t AudioFreq
 //    rccclkinit.PLLI2S.PLLI2SR = 2;
     HAL_RCCEx_PeriphCLKConfig(&rccclkinit);
   }
+#endif
+	rccclkinit.PeriphClockSelection = RCC_PERIPHCLK_SPI2;
+	rccclkinit.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL;
+	HAL_RCCEx_PeriphCLKConfig(&rccclkinit);
 }
 
 /**
@@ -629,6 +634,7 @@ __weak void BSP_AUDIO_IN_MspInit(I2S_HandleTypeDef *hi2s, void *Params)
   /* Enable I2S GPIO clocks */
   I2S2_SCK_GPIO_CLK_ENABLE();
   I2S2_MOSI_GPIO_CLK_ENABLE();
+  I2S2_WS_GPIO_CLK_ENABLE();
 
   /* I2S2 pins configuration: SCK and MOSI pins ------------------------------*/
   GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
@@ -642,6 +648,10 @@ __weak void BSP_AUDIO_IN_MspInit(I2S_HandleTypeDef *hi2s, void *Params)
   GPIO_InitStruct.Pin       = I2S2_MOSI_PIN ;
   GPIO_InitStruct.Alternate = I2S2_MOSI_AF;
   HAL_GPIO_Init(I2S2_MOSI_GPIO_PORT, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin       = I2S2_WS_PIN ;
+  GPIO_InitStruct.Alternate = I2S2_SCK_SD_WS_AF;
+  HAL_GPIO_Init(I2S3_WS_GPIO_PORT, &GPIO_InitStruct);
 
   /* Enable the DMA clock */
   I2S2_DMAx_CLK_ENABLE();

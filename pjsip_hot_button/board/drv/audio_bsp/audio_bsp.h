@@ -63,23 +63,29 @@
 #define I2S2                            SPI2
 #define I2S2_CLK_ENABLE()               __HAL_RCC_SPI2_CLK_ENABLE()
 #define I2S2_CLK_DISABLE()              __HAL_RCC_SPI2_CLK_DISABLE()
+
 #define I2S2_SCK_PIN                    GPIO_PIN_10
 #define I2S2_SCK_GPIO_PORT              GPIOB
 #define I2S2_SCK_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2S2_SCK_AF                     GPIO_AF5_SPI2
 
-#define I2S2_MOSI_PIN                   GPIO_PIN_3
+#define I2S2_MOSI_PIN                   GPIO_PIN_2
 #define I2S2_MOSI_GPIO_PORT             GPIOC
 #define I2S2_MOSI_GPIO_CLK_ENABLE()     __HAL_RCC_GPIOC_CLK_ENABLE()
 #define I2S2_MOSI_AF                    GPIO_AF5_SPI2
 
+#define I2S2_WS_PIN                     GPIO_PIN_11
+#define I2S3_WS_GPIO_PORT               GPIOA
+#define I2S2_WS_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOA_CLK_ENABLE()
+#define I2S2_SCK_SD_WS_AF               GPIO_AF5_SPI2
+
 /* I2S DMA Stream Rx definitions */
 #define I2S2_DMAx_CLK_ENABLE()          __HAL_RCC_DMA1_CLK_ENABLE()
 #define I2S2_DMAx_CLK_DISABLE()         __HAL_RCC_DMA1_CLK_DISABLE()
-#define I2S2_DMAx_STREAM                DMA1_Stream3
+#define I2S2_DMAx_STREAM                DMA1_Stream0
 //#define I2S2_DMAx_CHANNEL               DMA_CHANNEL_0
 #define I2S2_DMAxREQUEST                DMA_REQUEST_SPI2_RX
-#define I2S2_DMAx_IRQ                   DMA1_Stream3_IRQn
+#define I2S2_DMAx_IRQ                   DMA1_Stream0_IRQn
 #define I2S2_DMAx_PERIPH_DATA_SIZE      DMA_PDATAALIGN_HALFWORD
 #define I2S2_DMAx_MEM_DATA_SIZE         DMA_MDATAALIGN_HALFWORD
 
