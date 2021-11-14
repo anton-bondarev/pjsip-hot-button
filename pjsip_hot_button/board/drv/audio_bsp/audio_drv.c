@@ -18,7 +18,7 @@
 
 #include <portaudio.h>
 #include <drivers/audio/audio_dev.h>
-#include <drivers/audio/stm32f4_audio.h>
+#include <drivers/audio/audio_hot_button_drv.h>
 
 EMBOX_UNIT_INIT(stm32_audio_init);
 
@@ -82,7 +82,7 @@ static void stm32_audio_out_activate(void) {
 }
 
 static int stm32_audio_init(void) {
-	stm32f4_audio_init();
+	board_drv_audio_init();
 
 	/* Now activate and run INPUT and OUTPUT permanently */
 	stm32_audio_out_activate();

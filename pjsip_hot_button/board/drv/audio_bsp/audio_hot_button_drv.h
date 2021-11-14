@@ -1,12 +1,14 @@
 /*
- * audio_bsp.h
+ * audio_hot_button_drv.h
  *
- *  Created on: Aug 31, 2021
- *      Author: mvm
+ *  Created on: Nov 14, 2021
+ *      Author: anton
  */
 
-#ifndef SRC_AUDIO_AUDIO_BSP_H_
-#define SRC_AUDIO_AUDIO_BSP_H_
+#ifndef EXT_PROJECT_PJSIP_HOT_BUTTON_BOARD_DRV_AUDIO_BSP_AUDIO_HOT_BUTTON_DRV_H_
+#define EXT_PROJECT_PJSIP_HOT_BUTTON_BOARD_DRV_AUDIO_BSP_AUDIO_HOT_BUTTON_DRV_H_
+
+
 
 
 #define AMP_SD_Pin GPIO_PIN_15
@@ -82,14 +84,14 @@
 /* I2S DMA Stream Rx definitions */
 #define I2S2_DMAx_CLK_ENABLE()          __HAL_RCC_DMA1_CLK_ENABLE()
 #define I2S2_DMAx_CLK_DISABLE()         __HAL_RCC_DMA1_CLK_DISABLE()
-#define I2S2_DMAx_STREAM                DMA1_Stream0
+#define I2S2_DMAx_STREAM                DMA1_Stream3
 //#define I2S2_DMAx_CHANNEL               DMA_CHANNEL_0
 #define I2S2_DMAxREQUEST                DMA_REQUEST_SPI2_RX
-#define I2S2_DMAx_IRQ                   DMA1_Stream0_IRQn
+#define I2S2_DMAx_IRQ                   DMA1_Stream3_IRQn
 #define I2S2_DMAx_PERIPH_DATA_SIZE      DMA_PDATAALIGN_HALFWORD
 #define I2S2_DMAx_MEM_DATA_SIZE         DMA_MDATAALIGN_HALFWORD
 
-#define I2S2_IRQHandler                 DMA1_Stream0_IRQHandler
+#define I2S2_IRQHandler                 DMA1_Stream3_IRQHandler
 
 /* Select the interrupt preemption priority and subpriority for the IT/DMA interrupt */
 #define AUDIO_IN_IRQ_PREPRIO            0x0F   /* Select the preemption priority level(0 is the highest) */
@@ -126,6 +128,7 @@ void  BSP_AUDIO_OUT_MspDeInit(I2S_HandleTypeDef *hi2s, void *Params);
 
 uint8_t BSP_AUDIO_IN_Init(uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr);
 uint8_t BSP_AUDIO_IN_RecordPDM(uint32_t Instance, uint8_t *pData, uint32_t Size);
+uint8_t BSP_AUDIO_IN_Record(uint16_t* pbuf, uint32_t size);
 uint8_t BSP_AUDIO_IN_Stop(void);
 uint8_t BSP_AUDIO_IN_Pause(void);
 uint8_t BSP_AUDIO_IN_Resume(void);
@@ -167,6 +170,8 @@ void BSP_AUDIO_IN_MspDeInit(I2S_HandleTypeDef *hi2s, void *Params);
 #define DMA_MAX(_X_)                (((_X_) <= DMA_MAX_SZE)? (_X_):DMA_MAX_SZE)
 #define HTONS(A)  ((((uint16_t)(A) & 0xff00) >> 8) | (((uint16_t)(A) & 0x00ff) << 8))
 
-extern int stm32h7_audio_init(void);
 
-#endif /* SRC_AUDIO_AUDIO_BSP_H_ */
+
+int board_drv_audio_init(void);
+
+#endif /* EXT_PROJECT_PJSIP_HOT_BUTTON_BOARD_DRV_AUDIO_BSP_AUDIO_HOT_BUTTON_DRV_H_ */

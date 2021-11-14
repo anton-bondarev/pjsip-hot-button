@@ -11,7 +11,7 @@
 #include <framework/mod/options.h>
 #include <kernel/irq.h>
 
-#include <drivers/audio/stm32f4_audio.h>
+#include <drivers/audio/audio_hot_button_drv.h>
 
 #define STM32_AUDIO_OUT_DMA_IRQ      OPTION_GET(NUMBER, audio_out_dma_irq)
 static_assert(STM32_AUDIO_OUT_DMA_IRQ == I2S3_DMAx_IRQ, "");
@@ -50,7 +50,7 @@ STATIC_IRQ_ATTACH(STM32_AUDIO_OUT_DMA_IRQ, stm32_audio_out_dma_interrupt, NULL);
  * WORKAROUND: Run both IN and OUT everytime, and actually do not stop them
  * even if auddio_dev->stop() is called.
  */
-int stm32f4_audio_init(void) {
+int board_drv_audio_init(void) {
 	if (0 != irq_attach(STM32_AUDIO_IN_DMA_IRQ, stm32_audio_in_dma_interrupt,
 				0, NULL, "stm32_audio_dma_in")) {
 		log_error("irq_attach error");
@@ -61,7 +61,7 @@ int stm32f4_audio_init(void) {
 	}
 
 	if (0 != BSP_AUDIO_OUT_Init(
-			OUTPUT_DEVICE_AUTO,
+			0,
 			70,
 			16000)) {
 		log_error("BSP_AUDIO_OUT_Init failed");
